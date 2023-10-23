@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        // see Constraint Validation API 
+        // https://developer.mozilla.org/en-US/docs/Web/API/Constraint_validation
+
+        let check = () => {
+            
+            let bidaltzekoOK = true;
+
+            let abizen = document.getElementById("abizena");
+            abizen.setCustomValidity("");
+
+            let abizena = abizen.value;
+            let abizenaRegex = /^[A-Z][a-z]+$/;
+            if (abizenaRegex.test(abizena)) {
+                document.getElementById("abizena").style.backgroundColor = "green";
+            } else {
+                document.getElementById("abizena").style.backgroundColor = "red";
+                abizen.setCustomValidity("Soilik letrak onartzen dira eta lehenengo letra larria izan behar da");
+                bidaltzekoOK = false;
+            }
+
+            return bidaltzekoOK;
+        }
+
+        window.onload = () => {
+            document.getElementById("abizena").oninput = check;
+            document.querySelector("#formularioa").addEventListener("submit", (e) => {
+                e.preventDefault();
+                if (check()) e.target.submit();
+            });
+
+        };
+    </script>
+</head>
+<body>
+    <form action="/bezeroa" method="POST" id="formularioa">
+        Name: <input type="text" name="izena" required><br>
+        Email: <input type="email" name="email" id="mail"><br>
+        Password: <input type="password" name="pasahitza" id="pass"><br>
+        Confirm Password: <input type="password" name="konfirmazioa" id="conf"><br>
+        Generoa: <input type="select" name="generoa" id="gender"><br>
+        <input type="submit" value="Bidali">
+    </form>
+</body>
+</html>
