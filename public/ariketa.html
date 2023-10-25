@@ -46,8 +46,8 @@
         }
 
         window.onload = () => {
-            //document.getElementById("conf").oninput = pasahitzaKonfirmatu;
-            //document.getElementById("city").onchange = hiriaKonfirmatu;
+            document.getElementById("conf").oninput = pasahitzaKonfirmatu;
+            document.getElementById("city").oninput = hiriaKonfirmatu;
             document.querySelector("#formularioa").addEventListener("submit", (e) => {
                 e.preventDefault();
                 if (check()) e.target.submit();
