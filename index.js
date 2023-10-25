@@ -15,7 +15,7 @@ app.get("/", function(req, res) {
 //bezeroa POST
 app.post("/bezeroa",function(req,res){
     //res.send("Bezeroaren izena: " + req.body.izena);
-    res.send(`Kaixo ${req.body.izena} ${req.body.abizena}`); //req.body (POST)
+    res.send(req.body); //req.body (POST)
 });
 
 app.get('/bezeroa/:izena', function(req, res) {

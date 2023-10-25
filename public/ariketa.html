@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,27 +12,42 @@
         // https://developer.mozilla.org/en-US/docs/Web/API/Constraint_validation
 
         let check = () => {
-            
-            let bidaltzekoOK = true;
 
-            let abizen = document.getElementById("abizena");
-            abizen.setCustomValidity("");
+            let bidaltzekoOK = false;
 
-            let abizena = abizen.value;
-            let abizenaRegex = /^[A-Z][a-z]+$/;
-            if (abizenaRegex.test(abizena)) {
-                document.getElementById("abizena").style.backgroundColor = "green";
-            } else {
-                document.getElementById("abizena").style.backgroundColor = "red";
-                abizen.setCustomValidity("Soilik letrak onartzen dira eta lehenengo letra larria izan behar da");
-                bidaltzekoOK = false;
-            }
+           if(pasahitzaKonfirmatu() && hiriaKonfirmatu()){
+                bidaltzekoOK=true;
+           }
 
             return bidaltzekoOK;
         }
 
+        let pasahitzaKonfirmatu = () => {
+            let password = document.getElementById("pass")
+            let confirm_password = document.getElementById("conf");
+
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+                return false;
+            } else {
+                confirm_password.setCustomValidity('');
+                return true;
+            }
+
+        }
+
+        let hiriaKonfirmatu = () => {
+            let hiri = document.getElementById("city");
+            if(hiri.value.length < 3){
+                hiri.setCustomValidity("City name must be at least 3 characters long ");
+                return false;
+            }
+            return true;
+        }
+
         window.onload = () => {
-            document.getElementById("abizena").oninput = check;
+            //document.getElementById("conf").oninput = pasahitzaKonfirmatu;
+            //document.getElementById("city").onchange = hiriaKonfirmatu;
             document.querySelector("#formularioa").addEventListener("submit", (e) => {
                 e.preventDefault();
                 if (check()) e.target.submit();
@@ -40,14 +56,31 @@
         };
     </script>
 </head>
+
 <body>
     <form action="/bezeroa" method="POST" id="formularioa">
-        Name: <input type="text" name="izena" required><br>
-        Email: <input type="email" name="email" id="mail"><br>
-        Password: <input type="password" name="pasahitza" id="pass"><br>
-        Confirm Password: <input type="password" name="konfirmazioa" id="conf"><br>
-        Generoa: <input type="select" name="generoa" id="gender"><br>
-        <input type="submit" value="Bidali">
+        Name: <input type="text" name="name" required><br>
+        Email: <input type="email" name="email" id="mail" required><br>
+        Password: <input type="password" name="password" id="pass" required><br>
+        Confirm Password: <input type="password" name="confirm password" id="conf" required><br>
+        Gender: <select name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br>
+        Date of birth: <input type="date" name="dob" id="data" required><br>
+        Address: <textarea name="address" required></textarea><br>
+        City: <input type="text" name="city" id="city" required><br>
+        ZIP Code: <input type="number" name="zip" required><br>
+        I agree to the terms and conditions: <input type="checkbox" name="agree" required><br>
+        <fieldset>
+            <legend>I want to receive the newsletter:</legend>
+            <input type="radio" id="bai_button" name="newsletter" value="Yes" required>
+            <label for="bai_button">Yes</label>
+            <input type="radio" id="ez_button" name="newsletter" value="No">
+            <label for="ez_button">No</label><br>
+        </fieldset>
+        <input type="submit" value="Bidali"><br>
     </form>
 </body>
+
 </html>
